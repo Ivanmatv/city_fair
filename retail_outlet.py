@@ -2,10 +2,13 @@ from city_fair.seller import Seller
 
 
 class RetailOutlet:
-    def __init__(self, retail_outlet_name: str):
-        self.__retail_outlet_name = retail_outlet_name
-        self.__sellers = []
+    def __init__(self, retail_outlet: str):
+        self.__retail_outlet: str = retail_outlet
+        self.__sellers: list = []
         self.__products = {}
+
+    def get_name(self) -> str:
+        return self.__retail_outlet
 
     def add_seller(self, seller: Seller) -> None:
         seller_name = seller.get_name()
@@ -18,7 +21,7 @@ class RetailOutlet:
     def show_retail_outlet_sellers(self) -> None:
         formatted_sellers_list = ", ".join(self.__sellers)
         print(
-            f"Торговая точка - '{self.__retail_outlet_name}', "
+            f"Торговая точка - '{self.__retail_outlet}', "
             f"продавцы: {formatted_sellers_list}"
         )
 
@@ -53,6 +56,3 @@ class RetailOutlet:
         else:
             self.__products = products
             print(f"Продавец отдаёт - {product} в количестве {quantity} шт")
-
-
-
