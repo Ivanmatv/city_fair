@@ -1,22 +1,42 @@
 class Seller:
     def __init__(self, name: str):
         self.__name = name
+        self.__products = {}
 
     def get_name(self) -> str:
         return self.__name
 
-    def sale(self, products: dict, product: str, quantity: int) -> dict | str:
-        absence_product = 0
-        negative_result_text = ""
-        product_quantity = products.get(product)
-
-        if product in products and product_quantity > absence_product:
-            if quantity <= product_quantity:
-                products[product] -= quantity
-                return products
+    def add_product(self, product: str, quantity: int):
+        if product not in self.__products:
+            if quantity > 0 and isinstance(quantity, int):
+                self.__products[product] = quantity
             else:
-                negative_result_text = "Вы ввели недопустимое значение товара."
+                print("Количество должно быть целым и положительным!")
         else:
-            negative_result_text = "Такого товара нет!"
+            print("Такой товар уже есть!")
 
-        return negative_result_text
+    def show_products(self) -> None:
+        for product, quantity in self.__products.items():
+            print(f"Товар {product} - {quantity} шт")
+
+    def remove_product(self, product: str) -> None:
+        if product in self.__products:
+            del self.__products[product]
+        else:
+            print("Такого товара нет!")
+
+    def sale(self, product: str, quantity: int) -> str:
+        if product not in self.__products:
+            return f"{product} товара нет!"
+
+        product_quantity = self.__products[product]
+
+        if product_quantity != 0:
+            if 0 < quantity <= product_quantity:
+                self.__products[product] -= quantity
+                return f"Продано {product} - {quantity} шт."
+            else:
+                return "Вы ввели недопустимое значение товара."
+        else:
+            return "Такого товара нет!"
+
